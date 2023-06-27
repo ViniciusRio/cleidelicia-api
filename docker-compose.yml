@@ -1,19 +1,27 @@
 services:
   app:
-    image: php
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: "php -S 0.0.0.0:8080 -t public"
     ports:
       - 127.0.0.1:8080:8080
     working_dir: /app
     volumes:
       - ./:/app
+    depends_on:
+      - database
 
-  postgres:
+  database:
     image: postgres
+    restart: always
     volumes:
       - postgres-data:/var/lib/postgresql
+      - ./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
     environment:
-      POSTGRES_PASSWORD: 
+      POSTGRES_PASSWORD: 1991
+      POSTGRES_USER: vlmdr
+      POSTGRES__DB: postgres
 
 volumes:
   postgres-data:
