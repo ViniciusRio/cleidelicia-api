@@ -11,6 +11,11 @@ services:
       - ./:/app
     depends_on:
       - database
+    environment:
+      XDEBUG_MODE: debug
+      XDEBUG_CLIENT_HOST: 192.168.15.23
+      XDEBUG_CLIENT_PORT: 9003
+      XDEBUG_IDEKEY: docker
 
   database:
     image: postgres
