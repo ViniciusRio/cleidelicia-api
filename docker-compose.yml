@@ -30,6 +30,11 @@ services:
       POSTGRES_USER: vlmdr
       POSTGRES__DB: postgres
 
+  composer:
+    image: composer
+    volumes:
+      - ./:/app
+
 volumes:
   postgres-data:
 
