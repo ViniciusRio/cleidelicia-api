@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM php
+COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     wget \
