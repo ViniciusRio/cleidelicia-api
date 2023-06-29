@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-#FROM php:8.2.7
 FROM php:8.2.7-fpm
 COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
 RUN apt-get update && apt-get install -y \
