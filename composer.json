@@ -1,0 +1,10 @@
+{
+    "name": "cleidelicia/api",
+    "description": "API for Cleide's recipes website and application",
+    "authors": [
+        {
+            "name": "ViniciusRio"
+        }
+    ],
+    "require": {}
+}

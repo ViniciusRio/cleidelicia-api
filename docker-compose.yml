@@ -32,5 +32,11 @@ services:
     env_file:
       - database.env
 
+  composer:
+    image: composer
+    volumes:
+      - ./:/app
+    working_dir: /app
+
 volumes:
   postgres-data:
