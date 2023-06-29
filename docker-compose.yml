@@ -3,10 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "php -S 0.0.0.0:8080"
+    command: "php -S 0.0.0.0:8080 -t public"
     ports:
       - 127.0.0.1:8080:8080
-    working_dir: /app/public
+    working_dir: /app
     volumes:
       - ./:/app
     depends_on:
