@@ -1,16 +1,23 @@
 version: '3'
 
 services:
+  webserver:
+    image: nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/local/www
+      - ./site.conf:/etc/nginx/conf.d/site.conf
+    links:
+      - app
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "php -S 0.0.0.0:8080 -t public"
-    ports:
-      - "127.0.0.1:8080:8080"
-    working_dir: /app
     volumes:
-      - ./:/app
+      - ./:/var/local/www
     depends_on:
       - database
     environment:
@@ -28,8 +35,7 @@ services:
     environment:
       POSTGRES_PASSWORD: 1991
       POSTGRES_USER: vlmdr
-      POSTGRES__DB: postgres
+      POSTGRES_DB: postgres
 
 volumes:
   postgres-data:
-
