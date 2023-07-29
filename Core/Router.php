@@ -1,0 +1,36 @@
+<?php
+
+namespace Core;
+
+class Router
+{
+    public array $routes = [];
+
+    public function add($uri, $controller, $method): static
+    {
+        $this->routes[] = [
+            'uri' => $uri,
+            'controller' => $controller,
+            'method' => $method
+        ];
+
+        return $this;
+    }
+
+    public function route($uri, $method)
+    {
+        foreach ($this->routes as $route) {
+            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+                return require BASE_PATH . 'controllers/'.$route['controller'];
+            }
+        }
+        var_dump("route not found");
+        die();
+    }
+
+    public function get($uri, $controller): static
+    {
+        return $this->add($uri, $controller, 'GET');
+    }
+
+}

@@ -2,8 +2,8 @@
 
 return [
     'database' => [
-        'host' => 'database',
+        'host' => 'cleidelicia-api-database-1',
         'port' => '5432',
-        'dbname' => 'cleidelicia'
+        'dbname' => 'cleidelicia_db'
     ]
 ];

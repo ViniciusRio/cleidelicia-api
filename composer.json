@@ -6,5 +6,12 @@
             "name": "ViniciusRio"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/"
+        }
+    }
 }
