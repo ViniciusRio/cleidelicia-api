@@ -22,8 +22,13 @@ class Database
         return $this;
     }
 
-    public function fetchAll() : array|false
+    public function findAll() : array|false
     {
         return $this->statement->fetchAll();
+    }
+
+    public function find()
+    {
+        return $this->statement->fetch();
     }
 }
