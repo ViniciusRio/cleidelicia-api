@@ -21,11 +21,10 @@ class Router
     {
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
-                return require BASE_PATH . 'controllers/'.$route['controller'];
+                return require base_path('controllers/' . $route['controller']);
             }
         }
-        var_dump("route not found");
-        die();
+        response('Route not found', 404);
     }
 
     public function get($uri, $controller): static

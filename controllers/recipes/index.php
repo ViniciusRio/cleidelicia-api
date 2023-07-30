@@ -1,7 +1,8 @@
 <?php
 use Core\Database;
-$config = require BASE_PATH . 'config.php';
-$db = new Database($config['database']);
+use Core\App;
+
+$db = App::resolve(Database::class);
 $result = $db->query("SELECT * FROM cleidelicia.recipes")->fetchAll();
 
-dd($result);
+response($result);
