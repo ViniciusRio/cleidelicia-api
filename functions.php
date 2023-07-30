@@ -13,7 +13,7 @@ function base_path($path): string
     return BASE_PATH . $path;
 }
 
-function response($message = null, $httpCode = 200)
+function response($message = null, $httpCode = 200): void
 {
     header_remove();
     http_response_code($httpCode);
