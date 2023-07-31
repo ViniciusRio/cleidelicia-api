@@ -32,4 +32,9 @@ class Router
         return $this->add($uri, $controller, 'GET');
     }
 
+    public function post($uri, $controller) : static
+    {
+        return $this->add($uri, $controller, 'POST');
+    }
+
 }
