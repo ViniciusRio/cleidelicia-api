@@ -1,10 +1,9 @@
 <?php
 
-$router->get('/recipes', 'recipes/index.php');
-$router->get('/recipe', 'recipes/show.php');
+$router->get('/recipes', 'RecipeController@index');
+$router->get('/recipe', 'RecipeController@show');
 
-$router->get('/', 'index.php');
+//$router->get('/recipe/{id}', 'RecipeController@show');
 
-$router->post('/recipes', 'recipes/store.php');
-$router->patch('/recipes', 'recipes/update.php');
+
 
