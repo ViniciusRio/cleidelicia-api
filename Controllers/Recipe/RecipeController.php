@@ -7,7 +7,7 @@ use Core\Database;
 
 class RecipeController
 {
-    public function index()
+    public function index(): void
     {
         $db = App::resolve(Database::class);
         $result = $db->query("SELECT * FROM cleidelicia.recipes")->findAll();
@@ -15,7 +15,7 @@ class RecipeController
         response($result);
     }
 
-    public function show()
+    public function show(): void
     {
         $db = App::resolve(Database::class);
         $recipe = $db->query("SELECT * FROM cleidelicia.recipes WHERE id = :id", ['id' => $_GET['id']])->find();
@@ -23,7 +23,7 @@ class RecipeController
         response($recipe);
     }
 
-    public function store()
+    public function store(): void
     {
 
         $db = App::resolve(Database::class);
@@ -38,7 +38,7 @@ class RecipeController
 
     }
 
-    public function update()
+    public function update(): void
     {
 
         $db = App::resolve(Database::class);
@@ -76,11 +76,11 @@ class RecipeController
         response('Recipe updated successfully');
     }
 
-    public function destroy()
+    public function destroy(): void
     {
         $db = App::resolve(Database::class);
-        $db->query('DELETE FROM cleidelicia.recipes WHERE id = :id', ['id' => $_GET['id']]);
+        $recipes = $db->query('DELETE FROM cleidelicia.recipes WHERE id = :id RETURNING *', ['id' => $_GET['id']])->find();
 
-        response(true);
+        response($recipes);
     }
 }
