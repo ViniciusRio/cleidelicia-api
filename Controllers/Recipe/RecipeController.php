@@ -75,4 +75,12 @@ class RecipeController
 
         response('Recipe updated successfully');
     }
+
+    public function destroy()
+    {
+        $db = App::resolve(Database::class);
+        $db->query('DELETE FROM cleidelicia.recipes WHERE id = :id', ['id' => $_GET['id']]);
+
+        response(true);
+    }
 }

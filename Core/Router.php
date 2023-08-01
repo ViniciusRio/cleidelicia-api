@@ -71,4 +71,9 @@ class Router
         return $this->add($uri, $controller, 'PATCH');
     }
 
+    public function delete($uri, $controller): static
+    {
+        return $this->add($uri, $controller, 'DELETE');
+    }
+
 }
