@@ -2,15 +2,15 @@
 
 namespace Controllers\Recipe;
 
-use Core\Repository\Recipe\RecipeRepository;
+use Core\Repository\Recipe\RecipeRepositoryInterface;
 
 class RecipeController
 {
-    private RecipeRepository $recipeRepository;
+    private RecipeRepositoryInterface $recipeRepository;
 
-    public function __construct()
+    public function __construct(RecipeRepositoryInterface $recipeRepository)
     {
-        $this->recipeRepository = new RecipeRepository();
+        $this->recipeRepository = $recipeRepository;
     }
 
     public function index(): void

@@ -4,7 +4,7 @@ namespace Core\Repository\Recipe;
 
 use Core\Repository\Repository;
 
-class RecipeRepository extends Repository
+class RecipeRepository extends Repository implements RecipeRepositoryInterface
 {
     public function __construct()
     {

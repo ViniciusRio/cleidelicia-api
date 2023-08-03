@@ -5,6 +5,8 @@ namespace Core;
 class Router
 {
     public array $routes = [];
+    public array $dependencies = [];
+
 
     public function route($uri, $method)
     {
@@ -13,7 +15,12 @@ class Router
                 list($controllerPath, $action) = $this->getPathControllerAndAction($route['handler']);
 
                 if (class_exists($controllerPath)) {
-                    $controllerInstance = new $controllerPath();
+
+                    if (isset($this->dependencies[$controllerPath])) {
+                        $controllerInstance = new $controllerPath(...$this->dependencies[$controllerPath]);
+                    } else {
+                        $controllerInstance = new $controllerPath();
+                    }
                     if (method_exists($controllerInstance, $action)) {
                         return $controllerInstance->$action();
                     }
@@ -43,6 +50,11 @@ class Router
         }
 
         return $controller;
+    }
+
+    public function addDependency(string $key, $value): void
+    {
+        $this->dependencies[$key] = $value;
     }
 
     public function get($uri, $handler): static
