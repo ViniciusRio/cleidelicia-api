@@ -2,23 +2,27 @@
 
 namespace Controllers\Recipe;
 
-use Core\App;
-use Core\Database;
+use Core\Repository\Recipe\RecipeRepository;
 
 class RecipeController
 {
+    private RecipeRepository $recipeRepository;
+
+    public function __construct()
+    {
+        $this->recipeRepository = new RecipeRepository();
+    }
+
     public function index(): void
     {
-        $db = App::resolve(Database::class);
-        $result = $db->query("SELECT * FROM cleidelicia.recipes")->findAll();
+        $result = $this->recipeRepository->findAll();
 
         response($result);
     }
 
     public function show(): void
     {
-        $db = App::resolve(Database::class);
-        $recipe = $db->query("SELECT * FROM cleidelicia.recipes WHERE id = :id", ['id' => $_GET['id']])->find();
+        $recipe = $this->recipeRepository->findById($_GET['id']);
 
         response($recipe);
     }
@@ -26,13 +30,10 @@ class RecipeController
     public function store(): void
     {
 
-        $db = App::resolve(Database::class);
-
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        $db->query('INSERT INTO cleidelicia.recipes (title, description, method, ingredients, level, cooking_time, preparation_time, servers) 
-            VALUES (:title, :description, :method, :ingredients, :level, :cooking_time, :preparation_time, :servers)', $data);
+        $this->recipeRepository->insert($data);
 
         response('Recipe inserted successfully', 201);
 
@@ -40,8 +41,6 @@ class RecipeController
 
     public function update(): void
     {
-
-        $db = App::resolve(Database::class);
 
         $recipeId = $_GET['id'] ?? null;
 
@@ -68,18 +67,16 @@ class RecipeController
             response('No data provided for update', 400);
         }
 
-        $sql = "UPDATE cleidelicia.recipes SET $setClause WHERE id = :id";
         $bindings['id'] = $recipeId;
 
-        $db->query($sql, $bindings);
+        $this->recipeRepository->update($setClause, $bindings);
 
         response('Recipe updated successfully');
     }
 
     public function destroy(): void
     {
-        $db = App::resolve(Database::class);
-        $recipes = $db->query('DELETE FROM cleidelicia.recipes WHERE id = :id RETURNING *', ['id' => $_GET['id']])->find();
+        $recipes = $this->recipeRepository->delete($_GET['id']);
 
         response($recipes);
     }

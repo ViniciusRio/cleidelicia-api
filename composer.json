@@ -12,7 +12,10 @@
     "autoload": {
         "psr-4": {
             "Core\\": "Core/",
-            "Controllers\\Recipe\\": "Controllers/Recipe"
+            "Core\\Repository\\": "Core/Repository",
+            "Core\\Repository\\Recipe\\": "Core/Repository/Recipe",
+            "Controllers\\Recipe\\": "Controllers/Recipe",
+            "Models\\Recipe\\": "Models/Recipe"
         }
     }
 }
