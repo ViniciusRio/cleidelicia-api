@@ -15,16 +15,12 @@ class RecipeController
 
     public function index(): void
     {
-        $result = $this->recipeRepository->findAll();
-
-        response($result);
+        response($this->recipeRepository->findAllRecipes());
     }
 
     public function show(): void
     {
-        $recipe = $this->recipeRepository->findById($_GET['id']);
-
-        response($recipe);
+        response($this->recipeRepository->findRecipeById($_GET['id']));
     }
 
     public function store(): void
@@ -33,7 +29,7 @@ class RecipeController
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        $this->recipeRepository->insert($data);
+        $this->recipeRepository->saveRecipe($data);
 
         response('Recipe inserted successfully', 201);
 
@@ -69,15 +65,14 @@ class RecipeController
 
         $bindings['id'] = $recipeId;
 
-        $this->recipeRepository->update($setClause, $bindings);
+        $this->recipeRepository->updateRecipe($setClause, $bindings);
 
         response('Recipe updated successfully');
     }
 
     public function destroy(): void
     {
-        $recipes = $this->recipeRepository->delete($_GET['id']);
 
-        response($recipes);
+        response($this->recipeRepository->deleteRecipe($_GET['id']));
     }
 }

@@ -42,7 +42,7 @@ abstract class Repository implements RepositoryInterface
         $this->database->query("UPDATE cleidelicia.$this->table SET $clause WHERE id = :id", $bindings);
     }
 
-    public function delete(int $id): mixed
+    public function delete(int $id)
     {
         return $this->database->query("DELETE FROM cleidelicia.$this->table WHERE id = :id RETURNING *", ['id' => $id])->find();
     }
