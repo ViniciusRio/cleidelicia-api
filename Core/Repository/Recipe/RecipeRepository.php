@@ -25,14 +25,14 @@ class RecipeRepository extends Repository implements RecipeRepositoryInterface
         return Recipe::bindingRecipe(parent::findById($id));
     }
 
-    public function saveRecipe(array $data): void
+    public function saveRecipe(array $data): Recipe
     {
-        parent::insert($data);
+        return Recipe::bindingRecipe(parent::insert($data));
     }
 
-    public function updateRecipe(string $clause, array $bindings): void
+    public function updateRecipe(string $clause, array $bindings): Recipe
     {
-        parent::update($clause, $bindings);
+        return Recipe::bindingRecipe(parent::update($clause, $bindings));
     }
 
     public function deleteRecipe(int $id): Recipe

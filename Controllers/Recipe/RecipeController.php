@@ -33,13 +33,10 @@ class RecipeController
 
     public function store(): void
     {
-
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        $this->recipeRepository->saveRecipe($data);
-
-        response('Recipe inserted successfully', 201);
+        response($this->recipeRepository->saveRecipe($data), 201);
 
     }
 
@@ -73,14 +70,11 @@ class RecipeController
 
         $bindings['id'] = $recipeId;
 
-        $this->recipeRepository->updateRecipe($setClause, $bindings);
-
-        response('Recipe updated successfully');
+        response($this->recipeRepository->updateRecipe($setClause, $bindings));
     }
 
     public function destroy(): void
     {
-
         response($this->recipeRepository->deleteRecipe($_GET['id']));
     }
 }

@@ -21,14 +21,14 @@ abstract class Repository implements RepositoryInterface
         return $this->database->query("SELECT * FROM cleidelicia.$this->table WHERE id = :id", ['id' => $id])->find();
     }
 
-    public function insert(array $data): void
+    public function insert(array $data)
     {
         $columns = implode(', ', array_keys($data));
         $placeholders = ':' . implode(', :', array_keys($data));
 
-        $sql = "INSERT INTO cleidelicia.$this->table ($columns) VALUES ($placeholders)";
+        $sql = "INSERT INTO cleidelicia.$this->table ($columns) VALUES ($placeholders) RETURNING *";
 
-        $this->database->query($sql, $data);
+        return $this->database->query($sql, $data)->find();
 
     }
 
@@ -37,9 +37,9 @@ abstract class Repository implements RepositoryInterface
         return $this->database->query("SELECT * FROM cleidelicia." . $this->table)->findAll();
     }
 
-    public function update(string $clause, $bindings): void
+    public function update(string $clause, $bindings)
     {
-        $this->database->query("UPDATE cleidelicia.$this->table SET $clause WHERE id = :id", $bindings);
+        return $this->database->query("UPDATE cleidelicia.$this->table SET $clause WHERE id = :id RETURNING *", $bindings)->find();
     }
 
     public function delete(int $id)
