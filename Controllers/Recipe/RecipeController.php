@@ -3,6 +3,8 @@
 namespace Controllers\Recipe;
 
 use Core\Repository\Recipe\RecipeRepositoryInterface;
+use Validation\Recipe\RecipeException;
+use Validation\Recipe\RecipeValidation;
 
 class RecipeController
 {
@@ -18,9 +20,15 @@ class RecipeController
         response($this->recipeRepository->findAllRecipes());
     }
 
+    /**
+     * @throws RecipeException
+     */
     public function show(): void
     {
-        response($this->recipeRepository->findRecipeById($_GET['id']));
+        $id = $_GET['id'] ?? null;
+        RecipeValidation::IdValidator($id);
+
+        response($this->recipeRepository->findRecipeById($id));
     }
 
     public function store(): void

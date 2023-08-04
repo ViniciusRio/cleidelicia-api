@@ -3,6 +3,7 @@
 use Core\App;
 use Core\Repository\Recipe\RecipeRepository;
 use Core\Router;
+use Validation\Recipe\RecipeException;
 
 const BASE_PATH = __DIR__ . '/../';
 require BASE_PATH . 'functions.php';
@@ -18,6 +19,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $router->addDependency('Controllers\Recipe\RecipeController', [App::resolve(RecipeRepository::class)]);
 
-$router->route($uri, $method);
+try {
+    $router->route($uri, $method);
+
+} catch (RecipeException $recipeException) {
+    response($recipeException->errors, 400);
+}
 
 
