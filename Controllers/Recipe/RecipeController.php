@@ -3,6 +3,7 @@
 namespace Controllers\Recipe;
 
 use Core\Repository\Recipe\RecipeRepositoryInterface;
+use Http\Paginator;
 use Validation\Recipe\RecipeException;
 use Validation\Recipe\RecipeValidation;
 
@@ -17,7 +18,12 @@ class RecipeController
 
     public function index(): void
     {
-        response($this->recipeRepository->findAllRecipes());
+        $page = $_GET['page'] ?? 1;
+        $quantity = $_GET['quantity'] ?? 10;
+
+        $recipes = $this->recipeRepository->findAllRecipes();
+        $recipes = Paginator::Paginate($recipes, intval($page), intval($quantity));
+        response($recipes);
     }
 
     /**

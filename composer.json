@@ -17,7 +17,8 @@
             "Controllers\\Recipe\\": "Controllers/Recipe",
             "Models\\Recipe\\": "Models/Recipe",
             "Validation\\": "Validation",
-            "Validation\\Recipe\\": "Validation/Recipe"
+            "Validation\\Recipe\\": "Validation/Recipe",
+            "Http\\": "Http"
         }
     }
 }
