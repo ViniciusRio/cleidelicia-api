@@ -4,7 +4,7 @@ namespace Core\Repository\Recipe;
 
 interface RecipeRepositoryInterface
 {
-    function findAllRecipes();
+    function findAllRecipes(array $validColumns, ?string $sortBy = null, ?string $sortOrder = 'ASC');
 
     function findRecipeById($id);
 

@@ -32,9 +32,9 @@ abstract class Repository implements RepositoryInterface
 
     }
 
-    public function findAll(): array
+    public function findAll(string $clause): array
     {
-        return $this->database->query("SELECT * FROM cleidelicia." . $this->table)->findAll();
+        return $this->database->query("SELECT * FROM cleidelicia." . $this->table . $clause)->findAll();
     }
 
     public function update(string $clause, $bindings)
@@ -45,5 +45,16 @@ abstract class Repository implements RepositoryInterface
     public function delete(int $id)
     {
         return $this->database->query("DELETE FROM cleidelicia.$this->table WHERE id = :id RETURNING *", ['id' => $id])->find();
+    }
+
+    public function sortByAndSortOrder(?string $sortBy, array $validColumns, ?string $sortOrder): string
+    {
+        $orderByClause = '';
+        if ($sortBy !== null) {
+            if (in_array($sortBy, $validColumns)) {
+                $orderByClause = " ORDER BY $sortBy $sortOrder";
+            }
+        }
+        return $orderByClause;
     }
 }

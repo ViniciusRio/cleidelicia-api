@@ -4,6 +4,7 @@ namespace Controllers\Recipe;
 
 use Core\Repository\Recipe\RecipeRepositoryInterface;
 use Http\Paginator;
+use Models\Recipe\Recipe;
 use Validation\Recipe\RecipeException;
 use Validation\Recipe\RecipeValidation;
 
@@ -20,9 +21,12 @@ class RecipeController
     {
         $page = $_GET['page'] ?? 1;
         $quantity = $_GET['quantity'] ?? 10;
+        $sortOrder = $_GET['sort-order'] ?? 'asc';
+        $sortBy = $_GET['sort-by'] ?? 'id';
 
-        $recipes = $this->recipeRepository->findAllRecipes();
+        $recipes = $this->recipeRepository->findAllRecipes(Recipe::getProperties(), $sortBy, $sortOrder);
         $recipes = Paginator::Paginate($recipes, intval($page), intval($quantity));
+
         response($recipes);
     }
 

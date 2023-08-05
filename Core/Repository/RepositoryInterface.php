@@ -4,7 +4,7 @@ namespace Core\Repository;
 
 interface RepositoryInterface
 {
-    function findAll();
+    function findAll(string $clause);
 
     function findById($id);
 

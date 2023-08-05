@@ -15,9 +15,11 @@ class RecipeRepository extends Repository implements RecipeRepositoryInterface
     /**
      * @return array|Recipe[]
      */
-    public function findAllRecipes(): array
+    public function findAllRecipes(array $validColumns, ?string $sortBy = null, ?string $sortOrder = 'ASC'): array
     {
-        return Recipe::fromArrayCollection(parent::findAll());
+        $orderByClause = parent::sortByAndSortOrder($sortBy, $validColumns, $sortOrder);
+
+        return Recipe::fromArrayCollection(parent::findAll($orderByClause));
     }
 
     public function findRecipeById($id): Recipe

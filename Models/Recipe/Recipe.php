@@ -46,4 +46,16 @@ class Recipe
         return $recipe;
 
     }
+
+    public static function getProperties(): array
+    {
+        $properties = [];
+        $class = new \ReflectionClass(static::class);
+
+        foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+            $properties[] = $property->getName();
+        }
+
+        return $properties;
+    }
 }
