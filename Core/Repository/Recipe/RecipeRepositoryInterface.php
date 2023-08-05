@@ -2,15 +2,20 @@
 
 namespace Core\Repository\Recipe;
 
+use Models\Recipe\Recipe;
+
 interface RecipeRepositoryInterface
 {
-    function findAllRecipes(array $validColumns, ?string $sortBy = null, ?string $sortOrder = 'ASC');
+    /**
+     * @return array|Recipe[]
+     */
+    function findAllRecipes(array $validColumns = ['id'], ?string $sortBy = null, ?string $sortOrder = 'ASC'): array;
 
-    function findRecipeById($id);
+    function findRecipeById($id): Recipe;
 
-    function saveRecipe(array $data);
+    function saveRecipe(array $data): Recipe;
 
-    function updateRecipe(string $clause, array $bindings);
+    function updateRecipe(string $clause, array $bindings): Recipe;
 
-    function deleteRecipe(int $id);
+    function deleteRecipe(int $id): void;
 }

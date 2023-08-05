@@ -4,13 +4,13 @@ namespace Core\Repository;
 
 interface RepositoryInterface
 {
-    function findAll(string $clause);
+    function findAll(string $clause): array;
 
-    function findById($id);
+    function findById($id): array;
 
-    function insert(array $data);
+    function insert(array $data): array;
 
-    function update(string $clause, array $bindings);
+    function update(string $clause, array $bindings): array;
 
-    function delete(int $id);
+    function delete(int $id): void;
 }

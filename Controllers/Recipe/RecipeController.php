@@ -85,6 +85,7 @@ class RecipeController
 
     public function destroy(): void
     {
-        response($this->recipeRepository->deleteRecipe($_GET['id']));
+        $this->recipeRepository->deleteRecipe($_GET['id']);
+        response($this->recipeRepository->findAllRecipes());
     }
 }

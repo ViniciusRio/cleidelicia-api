@@ -12,16 +12,6 @@ class RecipeRepository extends Repository implements RecipeRepositoryInterface
         parent::__construct('recipes');
     }
 
-    /**
-     * @return array|Recipe[]
-     */
-    public function findAllRecipes(array $validColumns, ?string $sortBy = null, ?string $sortOrder = 'ASC'): array
-    {
-        $orderByClause = parent::sortByAndSortOrder($sortBy, $validColumns, $sortOrder);
-
-        return Recipe::fromArrayCollection(parent::findAll($orderByClause));
-    }
-
     public function findRecipeById($id): Recipe
     {
         return Recipe::bindingRecipe(parent::findById($id));
@@ -37,8 +27,21 @@ class RecipeRepository extends Repository implements RecipeRepositoryInterface
         return Recipe::bindingRecipe(parent::update($clause, $bindings));
     }
 
-    public function deleteRecipe(int $id): Recipe
+    /**
+     * @return array|Recipe[]
+     */
+    public function deleteRecipe(int $id): void
     {
-        return Recipe::bindingRecipe(parent::delete($id));
+        parent::delete($id);
+    }
+
+    /**
+     * @return array|Recipe[]
+     */
+    public function findAllRecipes(array $validColumns = ['id'], ?string $sortBy = null, ?string $sortOrder = 'ASC'): array
+    {
+        $orderByClause = parent::sortByAndSortOrder($sortBy, $validColumns, $sortOrder);
+
+        return Recipe::fromArrayCollection(parent::findAll($orderByClause));
     }
 }

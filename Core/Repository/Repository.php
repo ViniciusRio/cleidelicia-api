@@ -16,12 +16,12 @@ abstract class Repository implements RepositoryInterface
         $this->table = $table;
     }
 
-    public function findById($id)
+    public function findById($id): array
     {
         return $this->database->query("SELECT * FROM cleidelicia.$this->table WHERE id = :id", ['id' => $id])->find();
     }
 
-    public function insert(array $data)
+    public function insert(array $data): array
     {
         $columns = implode(', ', array_keys($data));
         $placeholders = ':' . implode(', :', array_keys($data));
@@ -37,14 +37,14 @@ abstract class Repository implements RepositoryInterface
         return $this->database->query("SELECT * FROM cleidelicia." . $this->table . $clause)->findAll();
     }
 
-    public function update(string $clause, $bindings)
+    public function update(string $clause, $bindings): array
     {
         return $this->database->query("UPDATE cleidelicia.$this->table SET $clause WHERE id = :id RETURNING *", $bindings)->find();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
-        return $this->database->query("DELETE FROM cleidelicia.$this->table WHERE id = :id RETURNING *", ['id' => $id])->find();
+        $this->database->query("DELETE FROM cleidelicia.$this->table WHERE id = :id", ['id' => $id]);
     }
 
     public function sortByAndSortOrder(?string $sortBy, array $validColumns, ?string $sortOrder): string
